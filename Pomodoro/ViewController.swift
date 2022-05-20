@@ -49,7 +49,7 @@ class ViewController: UIViewController {
     
     private lazy var button: UIButton = {
         let button = UIButton(type: .system)
-        button.setBackgroundImage(UIImage(named: "button"), for: UIControl.State.normal)
+        button.setBackgroundImage(UIImage(named: "tomato"), for: UIControl.State.normal)
         button.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(startWork)))
         return button
     }()
@@ -78,7 +78,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        createCircular()
+        createCircul()
         setupView()
         setupLayout()
     }
@@ -133,7 +133,7 @@ private extension ViewController {
 
 extension ViewController {
     
-    func createCircular() {
+    func createCircul() {
         circleLayer.path = circul.cgPath
         progressLayer.path = circul.cgPath
         
@@ -170,7 +170,7 @@ extension ViewController {
     }
     
     @objc
-    func addAnimation() {
+    func startAnimation() {
         if timeDuration > 1 {
             timeDuration -= 1
             label.text = formatTime(timeDuration)
@@ -218,7 +218,7 @@ extension ViewController {
     }
     
     func startTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(addAnimation), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(startAnimation), userInfo: nil, repeats: true)
     }
     
     func formatTime(_ time: Int) -> String {
