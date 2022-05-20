@@ -13,15 +13,15 @@ class ViewController: UIViewController {
     
     enum Static {
         static let indent: CGFloat = 32
-        static let smallIndent: CGFloat = 2
-        static let heightButton: CGFloat = 88
-        static let widhtButton: CGFloat = 98
+        static let indentSmall: CGFloat = 2
+        static let buttonHeight: CGFloat = 88
+        static let buttonWidth: CGFloat = 98
         static let startPoint: CGFloat = (-Double.pi / 2)
         static let endPoint: CGFloat = (2 * Double.pi)
         static let circleRadius: CGFloat = 106
         static let circleSize: CGFloat = 220
-        static let heightPlant: CGFloat = 76
-        static let widhtPlant: CGFloat = 86
+        static let plantHeight: CGFloat = 76
+        static let plantWidth: CGFloat = 86
     }
     
     // MARK: - Properties
@@ -36,7 +36,7 @@ class ViewController: UIViewController {
     private var isStopTime = false
     private var isPressed = false
     private var timer = Timer()
-    private var workTimeDuration = 1500
+    private var timeDuration = 1500
     
     private lazy var label: UILabel = {
         let label = UILabel()
@@ -57,7 +57,7 @@ class ViewController: UIViewController {
     private let progressLayer = CAShapeLayer()
     private let circleLayer = CAShapeLayer()
     
-    private lazy var circular: UIBezierPath = {
+    private lazy var circul: UIBezierPath = {
         let bezier = UIBezierPath(arcCenter: view.center, radius: Static.circleRadius, startAngle: Static.startPoint, endAngle: Static.endPoint, clockwise: true)
         return bezier
     }()
@@ -109,8 +109,8 @@ private extension ViewController {
             background.heightAnchor.constraint(equalTo: view.heightAnchor),
             
             button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            button.heightAnchor.constraint(equalToConstant: Static.heightButton),
-            button.widthAnchor.constraint(equalToConstant: Static.widhtButton),
+            button.heightAnchor.constraint(equalToConstant: Static.buttonHeight),
+            button.widthAnchor.constraint(equalToConstant: Static.buttonWidth),
             
             tomatoView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             tomatoView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -118,9 +118,9 @@ private extension ViewController {
             tomatoView.widthAnchor.constraint(equalToConstant: Static.circleSize),
             
             plantView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            plantView.heightAnchor.constraint(equalToConstant: Static.heightPlant),
-            plantView.widthAnchor.constraint(equalToConstant: Static.widhtPlant),
-            plantView.bottomAnchor.constraint(equalTo: tomatoView.topAnchor, constant: -Static.smallIndent),
+            plantView.heightAnchor.constraint(equalToConstant: Static.plantHeight),
+            plantView.widthAnchor.constraint(equalToConstant: Static.plantWidth),
+            plantView.bottomAnchor.constraint(equalTo: tomatoView.topAnchor, constant: -Static.indentSmall),
             
             label.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -Static.indent),
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -134,8 +134,8 @@ private extension ViewController {
 extension ViewController {
     
     func createCircular() {
-        circleLayer.path = circular.cgPath
-        progressLayer.path = circular.cgPath
+        circleLayer.path = circul.cgPath
+        progressLayer.path = circul.cgPath
         
         circleLayer.fillColor = UIColor.clear.cgColor
         circleLayer.strokeColor = UIColor(hex: "#FA8072").cgColor
@@ -157,7 +157,7 @@ extension ViewController {
     func startWork()  {
         if !isPressed {
             startTimer()
-            progressAnimation(duration: TimeInterval(workTimeDuration))
+            progressAnimation(duration: TimeInterval(timeDuration))
             isPressed = true
             isWorkTime = true
         } else {
@@ -171,9 +171,9 @@ extension ViewController {
     
     @objc
     func addAnimation() {
-        if workTimeDuration > 1 {
-            workTimeDuration -= 1
-            label.text = formatTime(workTimeDuration)
+        if timeDuration > 1 {
+            timeDuration -= 1
+            label.text = formatTime(timeDuration)
         } else {
             finishAnimation()
             loadNewColor()
@@ -229,16 +229,16 @@ extension ViewController {
     
     func loadNewColor() {
         if !isStopTime {
-            workTimeDuration = 300
-            label.text = formatTime(workTimeDuration)
+            timeDuration = 300
+            label.text = formatTime(timeDuration)
             label.textColor = UIColor(hex: "#006400")
             tomatoView.backgroundColor = UIColor(hex: "#A8E4A0")
             circleLayer.strokeColor = UIColor(hex: "#8FBC8F").cgColor
             progressLayer.strokeColor = UIColor(hex: "#006400").cgColor
             isStopTime = true
         } else {
-            workTimeDuration = 1500
-            label.text = formatTime(workTimeDuration)
+            timeDuration = 1500
+            label.text = formatTime(timeDuration)
             label.textColor = UIColor(hex: "#DC143C")
             tomatoView.backgroundColor = UIColor(hex: "#FFA07A")
             circleLayer.strokeColor = UIColor(hex: "#FA8072").cgColor
