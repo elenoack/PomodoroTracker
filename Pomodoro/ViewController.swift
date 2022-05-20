@@ -20,8 +20,8 @@ class ViewController: UIViewController {
         static let endPoint: CGFloat = (2 * Double.pi)
         static let circleRadius: CGFloat = 106
         static let circleSize: CGFloat = 220
-        static let plantHeight: CGFloat = 76
-        static let plantWidth: CGFloat = 86
+        static let plantHeight: CGFloat = 66
+        static let plantWidth: CGFloat = 76
     }
     
     // MARK: - Properties
