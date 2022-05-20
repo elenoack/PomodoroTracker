@@ -12,18 +12,16 @@ class ViewController: UIViewController {
     // MARK: - Constants
     
     enum Static {
-        static let centerIndent: CGFloat = 100
-        static let centerStopIndent: CGFloat = 92
-        static let indent: CGFloat = 16
-        static let labelHeight: CGFloat = 200
-        static let heightButton: CGFloat = 72
-        static let widhtButton: CGFloat = 82
+        static let indent: CGFloat = 32
+        static let smallIndent: CGFloat = 2
+        static let heightButton: CGFloat = 88
+        static let widhtButton: CGFloat = 98
         static let startPoint: CGFloat = (-Double.pi / 2)
         static let endPoint: CGFloat = (2 * Double.pi)
-        static let circleRadius: CGFloat = 83
-        static let circleSize: CGFloat = 166
-        static let heightPlant: CGFloat = 54
-        static let widhtPlant: CGFloat = 62
+        static let circleRadius: CGFloat = 106
+        static let circleSize: CGFloat = 220
+        static let heightPlant: CGFloat = 76
+        static let widhtPlant: CGFloat = 86
     }
     
     // MARK: - Properties
@@ -34,27 +32,22 @@ class ViewController: UIViewController {
         return background
     }()
     
-    var isStopTime = false
-    var isWorkTime = false
-    var isPressed = false
-    var isStopPressed = false
+    private var isWorkTime = false
+    private var isStopTime = false
+    private var isPressed = false
     private var timer = Timer()
-    private var stopTimer =  Timer()
     private var workTimeDuration = 1500
-    private var stopTimeDuration = 300
     
-    // MARK: - Properties Work
-    
-    private lazy var workLabel: UILabel = {
+    private lazy var label: UILabel = {
         let label = UILabel()
         label.text = "25:00"
         label.sizeToFit()
         label.textColor = UIColor(hex: "#DC143C")
-        label.font = UIFont.systemFont(ofSize: 32, weight: UIFont.Weight.medium)
+        label.font = UIFont.systemFont(ofSize: 37, weight: UIFont.Weight.medium)
         return label
     }()
     
-    private lazy var workButton: UIButton = {
+    private lazy var button: UIButton = {
         let button = UIButton(type: .system)
         button.setBackgroundImage(UIImage(named: "button"), for: UIControl.State.normal)
         button.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(startWork)))
@@ -64,8 +57,8 @@ class ViewController: UIViewController {
     private let progressLayer = CAShapeLayer()
     private let circleLayer = CAShapeLayer()
     
-    private lazy var circularPath: UIBezierPath = {
-        let bezier = UIBezierPath(arcCenter: CGPoint(x:  view.frame.midX, y: view.frame.midY - Static.centerIndent - Static.indent * 2), radius: Static.circleRadius, startAngle: Static.startPoint, endAngle: Static.endPoint, clockwise: true)
+    private lazy var circular: UIBezierPath = {
+        let bezier = UIBezierPath(arcCenter: view.center, radius: Static.circleRadius, startAngle: Static.startPoint, endAngle: Static.endPoint, clockwise: true)
         return bezier
     }()
     
@@ -74,56 +67,18 @@ class ViewController: UIViewController {
         return view
     }()
     
-    private lazy var tomatoWorkView: UIView = {
+    private lazy var tomatoView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(hex: "#FFA07A")
         view.layer.cornerRadius = Static.circleSize / 2
         return view
     }()
     
-    // MARK: - Properties Stop
-    
-    private lazy var stopLabel: UILabel = {
-        let label = UILabel()
-        label.text = "05:00"
-        label.sizeToFit()
-        label.textColor = UIColor(hex: "#006400")
-        label.font = UIFont.systemFont(ofSize: 32, weight: UIFont.Weight.medium)
-        return label
-    }()
-    
-    private lazy var stopButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setBackgroundImage(UIImage(named: "button"), for: UIControl.State.normal)
-        button.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(startStop)))
-        return button
-    }()
-    
-    private lazy var tomatoStopView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(hex: "#A8E4A0")
-        view.layer.cornerRadius = Static.circleSize / 2
-        return view
-    }()
-    
-    private lazy var plantStopView: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "plant"))
-        return view
-    }()
-    
-    private let progressStopLayer = CAShapeLayer()
-    private let circleStopLayer = CAShapeLayer()
-    
-    private lazy var circularStopPath: UIBezierPath = {
-        let bezier = UIBezierPath(arcCenter: CGPoint(x: view.frame.midX, y: view.frame.midY + Static.centerIndent + Static.indent * 2), radius: Static.circleRadius, startAngle: Static.startPoint, endAngle: Static.endPoint, clockwise: true)
-        return bezier
-    }()
-    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        createCircularPath()
+        createCircular()
         setupView()
         setupLayout()
     }
@@ -136,24 +91,14 @@ private extension ViewController {
     func setupView() {
         view.addSubviewsForAutoLayout([
             background,
-            tomatoWorkView,
-            tomatoStopView,
-            workLabel,
-            stopLabel,
-            workButton,
-            stopButton,
+            tomatoView,
+            label,
+            button,
+            plantView,
         ])
         
         view.layer.addSublayer(circleLayer)
         view.layer.addSublayer(progressLayer)
-        
-        view.layer.addSublayer(circleStopLayer)
-        view.layer.addSublayer(progressStopLayer)
-        
-        view.addSubviewsForAutoLayout([
-            plantView,
-            plantStopView,
-        ])
     }
     
     func setupLayout() {
@@ -163,41 +108,23 @@ private extension ViewController {
             background.widthAnchor.constraint(equalTo: view.widthAnchor),
             background.heightAnchor.constraint(equalTo: view.heightAnchor),
             
-            workLabel.bottomAnchor.constraint(equalTo: workButton.topAnchor, constant: -Static.indent),
-            workLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            button.heightAnchor.constraint(equalToConstant: Static.heightButton),
+            button.widthAnchor.constraint(equalToConstant: Static.widhtButton),
             
-            stopLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: Static.centerStopIndent),
-            stopLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            workButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            workButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -Static.centerIndent),
-            workButton.heightAnchor.constraint(equalToConstant: Static.heightButton),
-            workButton.widthAnchor.constraint(equalToConstant: Static.widhtButton),
-            
-            stopButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stopButton.topAnchor.constraint(equalTo: stopLabel.bottomAnchor, constant: Static.indent),
-            stopButton.heightAnchor.constraint(equalToConstant: Static.heightButton),
-            stopButton.widthAnchor.constraint(equalToConstant: Static.widhtButton),
-            
-            tomatoWorkView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            tomatoWorkView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -Static.centerIndent - (Static.indent * 2)),
-            tomatoWorkView.heightAnchor.constraint(equalToConstant: Static.circleSize),
-            tomatoWorkView.widthAnchor.constraint(equalToConstant: Static.circleSize),
+            tomatoView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            tomatoView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            tomatoView.heightAnchor.constraint(equalToConstant: Static.circleSize),
+            tomatoView.widthAnchor.constraint(equalToConstant: Static.circleSize),
             
             plantView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             plantView.heightAnchor.constraint(equalToConstant: Static.heightPlant),
             plantView.widthAnchor.constraint(equalToConstant: Static.widhtPlant),
-            plantView.bottomAnchor.constraint(equalTo: tomatoWorkView.topAnchor),
+            plantView.bottomAnchor.constraint(equalTo: tomatoView.topAnchor, constant: -Static.smallIndent),
             
-            tomatoStopView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            tomatoStopView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: Static.centerIndent + (Static.indent * 2)),
-            tomatoStopView.heightAnchor.constraint(equalToConstant: Static.circleSize),
-            tomatoStopView.widthAnchor.constraint(equalToConstant: Static.circleSize),
-            
-            plantStopView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            plantStopView.heightAnchor.constraint(equalToConstant: Static.heightPlant),
-            plantStopView.widthAnchor.constraint(equalToConstant: Static.widhtPlant),
-            plantStopView.bottomAnchor.constraint(equalTo: tomatoStopView.topAnchor),
+            label.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -Static.indent),
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.topAnchor.constraint(equalTo: plantView.bottomAnchor, constant: Static.indent),
         ])
     }
 }
@@ -206,32 +133,19 @@ private extension ViewController {
 
 extension ViewController {
     
-    func createCircularPath() {
-        circleLayer.path = circularPath.cgPath
-        progressLayer.path = circularPath.cgPath
+    func createCircular() {
+        circleLayer.path = circular.cgPath
+        progressLayer.path = circular.cgPath
         
         circleLayer.fillColor = UIColor.clear.cgColor
         circleLayer.strokeColor = UIColor(hex: "#FA8072").cgColor
-        circleLayer.lineWidth = 12
+        circleLayer.lineWidth = 15
         circleLayer.strokeEnd = 1.0
         
         progressLayer.fillColor = UIColor.clear.cgColor
         progressLayer.strokeColor = UIColor(hex: "#DC143C").cgColor
-        progressLayer.lineWidth = 12
+        progressLayer.lineWidth = 15
         progressLayer.strokeEnd = 0
-        
-        circleStopLayer.path = circularStopPath.cgPath
-        progressStopLayer.path = circularStopPath.cgPath
-        
-        circleStopLayer.fillColor = UIColor.clear.cgColor
-        circleStopLayer.strokeColor = UIColor(hex: "#8FBC8F").cgColor
-        circleStopLayer.lineWidth = 12
-        circleStopLayer.strokeEnd = 1.0
-        
-        progressStopLayer.fillColor = UIColor.clear.cgColor
-        progressStopLayer.strokeColor = UIColor(hex: "#006400").cgColor
-        progressStopLayer.lineWidth = 12
-        progressStopLayer.strokeEnd = 0
     }
 }
 
@@ -240,10 +154,98 @@ extension ViewController {
 extension ViewController {
     
     @objc
-    func startWork()  {}
+    func startWork()  {
+        if !isPressed {
+            startTimer()
+            progressAnimation(duration: TimeInterval(workTimeDuration))
+            isPressed = true
+            isWorkTime = true
+        } else {
+            if isWorkTime {
+                stopAnimation()
+            } else {
+                resumeAnimation()
+            }
+        }
+    }
     
     @objc
-    func startStop()  {}
+    func addAnimation() {
+        if workTimeDuration > 1 {
+            workTimeDuration -= 1
+            label.text = formatTime(workTimeDuration)
+        } else {
+            finishAnimation()
+            loadNewColor()
+        }
+    }
     
+    // MARK: - Animation
+    
+    func progressAnimation(duration: TimeInterval) {
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        animation.toValue = 1.0
+        animation.duration = duration
+        animation.fillMode = .removed
+        progressLayer.add(animation, forKey: "progressAnim")
+    }
+    
+    func stopAnimation() {
+        timer.invalidate()
+        let pausedTime = progressLayer.convertTime(CACurrentMediaTime(), from: nil)
+        progressLayer.speed = 0.0
+        progressLayer.timeOffset = pausedTime
+        isWorkTime = false
+    }
+    
+    func resumeAnimation() {
+        startTimer()
+        let pausedTime = progressLayer.timeOffset
+        progressLayer.timeOffset = 0.0
+        progressLayer.speed = 1.0
+        progressLayer.fillMode = .forwards
+        let timeSincePause = progressLayer.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
+        progressLayer.beginTime = timeSincePause
+        isWorkTime = true
+    }
+    
+    func finishAnimation() {
+        progressLayer.removeAnimation(forKey: "progressAnim")
+        progressLayer.strokeEnd = 0
+        timer.invalidate()
+        isWorkTime = false
+        isPressed = false
+    }
+    
+    func startTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(addAnimation), userInfo: nil, repeats: true)
+    }
+    
+    func formatTime(_ time: Int) -> String {
+        let minutes = (time / 60) % 60
+        let hours = (time % 60)
+        return String(format: "%02d:%02d", minutes, hours)
+    }
+    
+    func loadNewColor() {
+        if !isStopTime {
+            workTimeDuration = 300
+            label.text = formatTime(workTimeDuration)
+            label.textColor = UIColor(hex: "#006400")
+            tomatoView.backgroundColor = UIColor(hex: "#A8E4A0")
+            circleLayer.strokeColor = UIColor(hex: "#8FBC8F").cgColor
+            progressLayer.strokeColor = UIColor(hex: "#006400").cgColor
+            isStopTime = true
+        } else {
+            workTimeDuration = 1500
+            label.text = formatTime(workTimeDuration)
+            label.textColor = UIColor(hex: "#DC143C")
+            tomatoView.backgroundColor = UIColor(hex: "#FFA07A")
+            circleLayer.strokeColor = UIColor(hex: "#FA8072").cgColor
+            progressLayer.strokeColor = UIColor(hex: "#DC143C").cgColor
+            isStopTime = false
+        }
+    }
 }
+
 

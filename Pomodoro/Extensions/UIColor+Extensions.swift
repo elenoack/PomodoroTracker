@@ -1,9 +1,4 @@
-//
-//  UIColor+Extensions.swift
-//  Homework13
-//
-//  Created by TMS on 09.11.2021.
-//
+
 
 import UIKit
 
@@ -23,5 +18,4 @@ extension UIColor {
             alpha: 1.0
         )
     }
-
 }
