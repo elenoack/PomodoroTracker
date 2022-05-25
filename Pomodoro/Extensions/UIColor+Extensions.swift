@@ -1,3 +1,9 @@
+//
+//  UIColor+Extensions.swift
+//  Pomodoro
+//
+//  Created by mac on 20.05.22.
+//
 
 
 import UIKit
