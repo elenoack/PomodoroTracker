@@ -7,17 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		04679BE7283EB21200DD0C92 /* Music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 04679BE6283EB21200DD0C92 /* Music.mp3 */; };
 		04679BE9283EBCA400DD0C92 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04679BE8283EBCA400DD0C92 /* SceneDelegate.swift */; };
 		04679BEB283EBD9000DD0C92 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04679BEA283EBD9000DD0C92 /* AppDelegate.swift */; };
 		047307A42837968A0016CC38 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047307A32837968A0016CC38 /* ViewController.swift */; };
 		047307A92837968B0016CC38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 047307A82837968B0016CC38 /* Assets.xcassets */; };
 		047307B6283798300016CC38 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047307B4283798300016CC38 /* UIColor+Extensions.swift */; };
 		047307B7283798300016CC38 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047307B5283798300016CC38 /* UIView+Constraints.swift */; };
+		04E4EC30283ED372000A63B2 /* Music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 04E4EC2F283ED372000A63B2 /* Music.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		04679BE6283EB21200DD0C92 /* Music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Music.mp3; sourceTree = "<group>"; };
 		04679BE8283EBCA400DD0C92 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		04679BEA283EBD9000DD0C92 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0473079C2837968A0016CC38 /* Pomodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pomodoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -26,6 +25,7 @@
 		047307AD2837968B0016CC38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		047307B4283798300016CC38 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		047307B5283798300016CC38 /* UIView+Constraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
+		04E4EC2F283ED372000A63B2 /* Music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Music.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,10 +50,10 @@
 		04679BDD283E97FB00DD0C92 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				04679BE6283EB21200DD0C92 /* Music.mp3 */,
 				04679BEA283EBD9000DD0C92 /* AppDelegate.swift */,
 				04679BE8283EBCA400DD0C92 /* SceneDelegate.swift */,
 				047307A82837968B0016CC38 /* Assets.xcassets */,
+				04E4EC2F283ED372000A63B2 /* Music.mp3 */,
 				047307AD2837968B0016CC38 /* Info.plist */,
 			);
 			path = "Supporting Files";
@@ -153,7 +153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				047307A92837968B0016CC38 /* Assets.xcassets in Resources */,
-				04679BE7283EB21200DD0C92 /* Music.mp3 in Resources */,
+				04E4EC30283ED372000A63B2 /* Music.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
