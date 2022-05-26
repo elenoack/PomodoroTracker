@@ -34,7 +34,8 @@ class ViewController: UIViewController {
     
     // MARK: - Properties
     
-    var player: AVAudioPlayer?
+    var playerLooper: AVPlayerLooper?
+    var queuePlayer: AVQueuePlayer?
     let url = Bundle.main.url(forResource: "Music", withExtension: ".mp3")
     
     let background: UIImageView = {
@@ -69,7 +70,7 @@ class ViewController: UIViewController {
     private lazy var plusButton: UIButton = {
         let button = UIButton(type: .system)
         button.setBackgroundImage(UIImage(systemName: "chevron.compact.up"), for: UIControl.State.normal)
-        button.tintColor = UIColor(hex: "#DC143C")
+        button.tintColor = UIColor(hex: "ff6666")
         button.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(plusTime)))
         return button
     }()
@@ -77,7 +78,7 @@ class ViewController: UIViewController {
     private lazy var minusButton: UIButton = {
         let button = UIButton(type: .system)
         button.setBackgroundImage(UIImage(systemName: "chevron.compact.down"), for: UIControl.State.normal)
-        button.tintColor = UIColor(hex: "#DC143C")
+        button.tintColor = UIColor(hex: "ff6666")
         button.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(minusTime)))
         return button
     }()
@@ -223,7 +224,7 @@ extension ViewController {
     func startWork()  {
         if !isPressed {
             startTimer()
-            progressAnimation(duration: TimeInterval(timeDuration))
+            progressAnimation(duration: TimeInterval(timeDuration / 100))
             isPressed = true
             isWorkTime = true
         } else {
@@ -267,13 +268,18 @@ extension ViewController {
     @objc
     func playMusic() {
         if let url = url {
-            player = try? AVAudioPlayer(contentsOf: url)
-            if isPlayMusic {
-                player?.stop()
-                isPlayMusic = false
-            } else {
-                player?.play()
-                isPlayMusic = true
+            let asset: AVAsset = .init(url: url)
+            let playerItem = AVPlayerItem(asset: asset)
+            queuePlayer = AVQueuePlayer(playerItem: playerItem)
+            if let queuePlayer = queuePlayer {
+                playerLooper = AVPlayerLooper(player: queuePlayer, templateItem: playerItem)
+                if isPlayMusic {
+                    queuePlayer.pause()
+                    isPlayMusic = false
+                } else {
+                    queuePlayer.play()
+                    isPlayMusic = true
+                }
             }
         }
     }
@@ -283,8 +289,10 @@ extension ViewController {
     func progressAnimation(duration: TimeInterval) {
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.toValue = 1.0
+        animation.speed = 0.8
         animation.duration = duration
-        animation.fillMode = .removed
+        animation.fillMode = .forwards
+        animation.isRemovedOnCompletion = true
         progressLayer.add(animation, forKey: "progressAnim")
         plusButton.isEnabled = false
         minusButton.isEnabled = false
@@ -338,8 +346,8 @@ extension ViewController {
             tomatoView.backgroundColor = UIColor(hex: "#A8E4A0")
             circleLayer.strokeColor = UIColor(hex: "#8FBC8F").cgColor
             progressLayer.strokeColor = UIColor(hex: "#006400").cgColor
-            plusButton.tintColor = UIColor(hex: "#006400")
-            minusButton.tintColor = UIColor(hex: "#006400")
+            plusButton.tintColor = UIColor(hex: "669966")
+            minusButton.tintColor = UIColor(hex: "669966")
             isStopTime = true
         } else {
             timeDuration = 150000
@@ -348,8 +356,8 @@ extension ViewController {
             tomatoView.backgroundColor = UIColor(hex: "#FFA07A")
             circleLayer.strokeColor = UIColor(hex: "#FA8072").cgColor
             progressLayer.strokeColor = UIColor(hex: "#DC143C").cgColor
-            plusButton.tintColor = UIColor(hex: "#DC143C")
-            minusButton.tintColor = UIColor(hex: "#DC143C")
+            plusButton.tintColor = UIColor(hex: "ff6666")
+            minusButton.tintColor = UIColor(hex: "ff6666")
             isStopTime = false
         }
     }
