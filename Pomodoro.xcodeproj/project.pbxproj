@@ -50,8 +50,6 @@
 		04679BDD283E97FB00DD0C92 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				04679BEA283EBD9000DD0C92 /* AppDelegate.swift */,
-				04679BE8283EBCA400DD0C92 /* SceneDelegate.swift */,
 				047307A82837968B0016CC38 /* Assets.xcassets */,
 				04E4EC2F283ED372000A63B2 /* Music.mp3 */,
 				047307AD2837968B0016CC38 /* Info.plist */,
@@ -78,6 +76,7 @@
 		0473079E2837968A0016CC38 /* Pomodoro */ = {
 			isa = PBXGroup;
 			children = (
+				04F0AC5C2840BCF10084689C /* Application */,
 				04679BDC283E97F000DD0C92 /* Controlers */,
 				047307B3283798300016CC38 /* Extensions */,
 				04679BDD283E97FB00DD0C92 /* Supporting Files */,
@@ -92,6 +91,15 @@
 				047307B5283798300016CC38 /* UIView+Constraints.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		04F0AC5C2840BCF10084689C /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				04679BEA283EBD9000DD0C92 /* AppDelegate.swift */,
+				04679BE8283EBCA400DD0C92 /* SceneDelegate.swift */,
+			);
+			path = Application;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -302,7 +310,7 @@
 				INFOPLIST_FILE = "Pomodoro/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = ViewController;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -331,7 +339,7 @@
 				INFOPLIST_FILE = "Pomodoro/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = ViewController;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
